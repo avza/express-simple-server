@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+    server:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        container_name: server_api
+        hostname: server_api
+        ports:
+            - "8000:8000" 
+        networks:
+            - example-net  
+    nginx:
+        build:
+          context: .
+          dockerfile: Dockerfile-nginx
+        container_name: nginx
+        hostname: nginx
+        ports:
+            - "80:80" 
+        depends_on:
+            - server
+        networks:
+            - example-net
+
+networks:
+  example-net:
+    external: true
